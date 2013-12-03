@@ -2,6 +2,7 @@ package ui;
 
 import java.awt.Dimension;
 
+import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -17,7 +18,8 @@ public class InputPanel extends JPanel {
     private JSpinner lowerSpinner;
     private JSpinner upperSpinner;
     private JSpinner startSpinner;
-    
+    private JSpinner iterationSpinner;
+    private JSpinner accuracySpinner;
     
     public static void main(String[] args) {
         MainFrame frame = new MainFrame();
@@ -59,6 +61,22 @@ public class InputPanel extends JPanel {
         prefSize = new Dimension(30, prefSize.height);
         field.setPreferredSize(prefSize);
         
+        //Conditions
+        // Iterations
+        JCheckBox iterationsBox = new JCheckBox("Iterations: ");
+        iterationSpinner = new JSpinner(new SpinnerNumberModel(0, 0, MAX_X, 1));
+        field = ((JSpinner.DefaultEditor) iterationSpinner.getEditor());
+        prefSize = field.getPreferredSize();
+        prefSize = new Dimension(30, prefSize.height);
+        field.setPreferredSize(prefSize);
+        
+        // Accuracy
+        JCheckBox accuracyBox = new JCheckBox("Accuracy: ");
+        accuracySpinner = new JSpinner(new SpinnerNumberModel(0, 0, MAX_X, 0.001));
+        field = ((JSpinner.DefaultEditor) accuracySpinner.getEditor());
+        prefSize = field.getPreferredSize();
+        prefSize = new Dimension(50, prefSize.height);
+        field.setPreferredSize(prefSize);
         
         /*
          * Add components
@@ -73,8 +91,12 @@ public class InputPanel extends JPanel {
         add(upperSpinner, "wrap");
         
         add(startLabel);
-        add(startSpinner);
+        add(startSpinner, "wrap 10");
         
+        add(iterationsBox);
+        add(iterationSpinner, "wrap");
+        add(accuracyBox);
+        add(accuracySpinner, "wrap");
     }
     
 }
