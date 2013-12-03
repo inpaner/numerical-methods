@@ -21,12 +21,13 @@ public class RegulaFalsi {
     public void solve() {
         double x0 = lowerBound;
         double x1 = upperBound;
-        double y0 = function.evaluate(x0);
-        double y1 = function.evaluate(x1);
         double x2 = -1;
         double y2 = -1;
         int iterations = 0;
         do {
+            double y0 = function.evaluate(x0);
+            double y1 = function.evaluate(x1);
+            
             System.out.println(x0 + "\t" + x1);
             
             x2 = (x0 * y1 - x1 * y0) / (y1 - y0);
@@ -43,6 +44,5 @@ public class RegulaFalsi {
 
             
         } while (iterations != 20);
-        
     }
 }
