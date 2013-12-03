@@ -8,12 +8,19 @@ public class Polynomial {
     
     public static void main(String[] args) {
         List<Double> c = new ArrayList<Double>();
-        c.add(-1.0);
-        c.add(3.0);
-        c.add(4.0);
+        c.add(1.0);
+        c.add(0.0);
+        c.add(-78.8);
         Polynomial p = new Polynomial(c);
         System.out.println(p.toString());
-        System.out.println(p.evaluate(3.0));
+        System.out.println(p.evaluate(6.0));
+    }
+    
+    public Polynomial(double... coefficients) {
+        this.coefficients = new ArrayList<>();
+        for (double coefficient : coefficients) {
+            this.coefficients.add(coefficient);
+        }
     }
     
     public Polynomial(List<Double> coefficients) {
@@ -45,9 +52,11 @@ public class Polynomial {
         
         StringBuilder equation = new StringBuilder();
         for (double coefficient : coefficients) {
-            if (coefficient == 0)
+            if (coefficient == 0) {
+                degree--;
                 continue;
-            
+            }
+                
             if (coefficient > 0) {
                 equation.append(" + ");
                 equation.append(coefficient);
