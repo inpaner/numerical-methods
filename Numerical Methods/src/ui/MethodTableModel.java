@@ -23,6 +23,25 @@ public class MethodTableModel extends AbstractTableModel {
     public int getRowCount() {
         return method.getIterationValues().size();
     }
+    
+    
+    @Override
+    public String getColumnName(int column) {
+        String columnName = "";
+        switch(column) {
+        case 0: 
+            columnName = "Iteration";
+            break;
+        
+        default:
+            int valuesColumn = column - 1;
+            columnName = method.getColumnNames().get(valuesColumn);
+            break;
+        }
+        
+        return columnName;
+    }
+
 
     @Override
     public Object getValueAt(int rowIndex, int colIndex) {
