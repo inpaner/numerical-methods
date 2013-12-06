@@ -22,6 +22,13 @@ public abstract class Method {
         return iterations;
     }
     
+    public double getFinalY() {
+        if (!isSolved) {
+            solveAndStoreValues();
+        }
+        return getY();
+    }
+    
     public abstract List<String> getColumnNames();
     
     protected abstract void iterate();
@@ -32,7 +39,7 @@ public abstract class Method {
         boolean result = false;
         
         if (AccuracyChecker.isAccurate(getY())
-                && IterationChecker.isFinishedIterating(iterations)) {
+                || IterationChecker.isFinishedIterating(iterations)) {
             result = true;
         }
                 
@@ -42,6 +49,7 @@ public abstract class Method {
     private void solveAndStoreValues() {
         iterationValues = new ArrayList<>();
         iterations = 0; 
+        addIterationRow(iterationValues);
         do {
             iterate();
             addIterationRow(iterationValues);
@@ -49,4 +57,5 @@ public abstract class Method {
         } while (!isFinished());
         isSolved = true;
     }
+
 }
