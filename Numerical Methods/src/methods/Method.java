@@ -1,11 +1,8 @@
 package methods;
 
+import java.util.List;
+
 public abstract class Method {
-    private Polynomial polynomial;
-    
-    protected Method(Polynomial polynomial) {
-        this.polynomial = polynomial;
-    }
     
     protected boolean isFinished(double y, int iterations) {
         boolean result = false;
@@ -17,4 +14,8 @@ public abstract class Method {
                 
         return result;
     }
+
+    public abstract List<String> getColumnNames();
+    public abstract List<List<Double>> getIterationValues();
+    
 }
