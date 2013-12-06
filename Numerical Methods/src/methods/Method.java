@@ -4,16 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class Method {
+    private boolean isSolved = false;
     private List<List<Double>> iterationValues; 
     private int iterations;
     
     public List<List<Double>> getIterationValues() {
-        if (iterationValues == null) {
+        if (!isSolved) {
             solveAndStoreValues();
         }
         return iterationValues;
     }
-
+    
+    public int getTotalIterations() {
+        if (!isSolved) {
+            solveAndStoreValues();
+        }
+        return iterations;
+    }
+    
     public abstract List<String> getColumnNames();
     
     protected abstract void iterate();
@@ -39,5 +47,6 @@ public abstract class Method {
             addIterationRow(iterationValues);
             iterations++;
         } while (!isFinished());
+        isSolved = true;
     }
 }
