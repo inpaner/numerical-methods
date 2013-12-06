@@ -1,6 +1,6 @@
 package methods;
 
-public class Secant {
+public class Secant extends Method {
     private Polynomial function;
     private double lowerBound;
     private double upperBound;
@@ -13,6 +13,7 @@ public class Secant {
     }
     
     public Secant(Polynomial polynomial, int x0, int x1) {
+        super(polynomial);
         function = polynomial;
         this.lowerBound = x0;
         this.upperBound = x1;
@@ -23,16 +24,15 @@ public class Secant {
         double x1 = upperBound;
         double x2 = -1;
         int iterations = 0;
-        
+        double y0;
         do {
-            double y0 = function.evaluate(x0);
+            y0 = function.evaluate(x0);
             double y1 = function.evaluate(x1);
             x2 = x1 - ( (y1 * (x0 - x1)) / (y0 - y1) );
             x0 = x1;
             x1 = x2;            
             iterations++;
-            System.out.println(x0 + "\t" + x1 + "\t" + function.evaluate(x2));       
             
-        } while (iterations != 20);
+        } while (!isFinished(y0, iterations));
     }
 }

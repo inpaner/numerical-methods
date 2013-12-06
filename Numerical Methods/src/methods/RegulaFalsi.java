@@ -1,6 +1,6 @@
 package methods;
 
-public class RegulaFalsi {
+public class RegulaFalsi extends Method {
     private Polynomial function;
     private double lowerBound;
     private double upperBound;
@@ -13,6 +13,7 @@ public class RegulaFalsi {
     }
     
     public RegulaFalsi(Polynomial polynomial, double x0, double x1) {
+        super(polynomial);
         function = polynomial;
         this.lowerBound = x0;
         this.upperBound = x1;
@@ -21,8 +22,8 @@ public class RegulaFalsi {
     public void solve() {
         double x0 = lowerBound;
         double x1 = upperBound;
-        double x2 = -1;
-        double y2 = -1;
+        double x2;
+        double y2;
         int iterations = 0;
         do {
             double y0 = function.evaluate(x0);
@@ -41,8 +42,7 @@ public class RegulaFalsi {
             }
         
             iterations++;
-
-            
-        } while (iterations != 20);
+       
+        } while (!isFinished(y2, iterations));
     }
 }
