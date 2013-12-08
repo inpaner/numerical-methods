@@ -5,6 +5,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import ui.events.InputListener;
 import methods.Polynomial;
 import methods.RegulaFalsi;
 import methods.Secant;
@@ -16,6 +17,7 @@ public class MainPanel extends JPanel {
     private MethodTab falsiTab;
     private MethodTab secantTab;
     private GraphPanel graphPanel;
+    private InputPanel inputPanel;
     
     public static void main(String[] args) {
         MainFrame frame = new MainFrame();
@@ -24,7 +26,7 @@ public class MainPanel extends JPanel {
     }
     
     public MainPanel() { 
-        InputPanel inputPanel = new InputPanel();
+        inputPanel = new InputPanel();
         falsiTab = new MethodTab();
         secantTab = new MethodTab();
         
@@ -39,6 +41,10 @@ public class MainPanel extends JPanel {
         add(inputPanel, "wrap");
         add(tabPane);
         add(graphPanel);
+    }
+    
+    public void addInputListener(InputListener listener) {
+        inputPanel.addListener(listener);
     }
     
     public void updatePolynomial(Polynomial polynomial) {

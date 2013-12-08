@@ -1,6 +1,8 @@
 package ui.events;
 
 public interface InputListener {
+    void equationChanged(String text);
+    
     void upperLimitChanged(int x);
     void lowerLimitChanged(int x);
     void startingPointChanged(int x);

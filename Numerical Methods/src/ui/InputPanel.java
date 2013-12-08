@@ -15,6 +15,8 @@ import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import net.miginfocom.swing.MigLayout;
 import ui.events.InputListener;
@@ -24,6 +26,8 @@ public class InputPanel extends JPanel {
     private final int MAX_X = 1000;
     private List<InputListener> listeners = new ArrayList<>();
     
+    private JTextField equationField;
+    private JLabel equationLabel;
     private JSpinner lowerSpinner;
     private JSpinner upperSpinner;
     private JSpinner startSpinner;
@@ -39,12 +43,10 @@ public class InputPanel extends JPanel {
     }
     
     public InputPanel() {
-        /*
-         * Initialize components
-         */
         // Equation
-        JTextField equationField = new JTextField(20);
-        JLabel equationLabel = new JLabel("<html>2x<sup>10</sup></html>");
+        equationField = new JTextField(20);
+        equationLabel = new JLabel("<html>2x<sup>10</sup></html>");
+        
         
         // Interval
         JLabel intervalLabel = new JLabel("Interval: ");
@@ -63,6 +65,7 @@ public class InputPanel extends JPanel {
         prefSize = new Dimension(30, prefSize.height);
         field.setPreferredSize(prefSize);
         
+        
         // Starting point 
         JLabel startLabel = new JLabel("Starting Point: ");
         
@@ -72,6 +75,7 @@ public class InputPanel extends JPanel {
         prefSize = new Dimension(30, prefSize.height);
         field.setPreferredSize(prefSize);
         
+        
         // Iterations
         iterationsBox = new JCheckBox("Iterations: ");
         iterationSpinner = new JSpinner(new SpinnerNumberModel(0, 0, MAX_X, 1));
@@ -79,6 +83,7 @@ public class InputPanel extends JPanel {
         prefSize = field.getPreferredSize();
         prefSize = new Dimension(30, prefSize.height);
         field.setPreferredSize(prefSize);
+        
         
         // Accuracy
         accuracyBox = new JCheckBox("Accuracy: ");
@@ -91,6 +96,7 @@ public class InputPanel extends JPanel {
         /*
          * Add listeners
          */
+        equationField.getDocument().addDocumentListener(new EquationFieldListener());
         lowerSpinner.addChangeListener(new LowerSpinnerListener());
         upperSpinner.addChangeListener(new UpperSpinnerListener());
         startSpinner.addChangeListener(new StartSpinnerListener());
@@ -118,6 +124,13 @@ public class InputPanel extends JPanel {
         add(iterationSpinner, "wrap");
         add(accuracyBox);
         add(accuracySpinner, "wrap");
+        
+        setDefaultValues();
+    }
+    
+    private void setDefaultValues() {
+        iterationsBox.setSelected(true);
+        accuracyBox.setSelected(true);
     }
     
     public void addListener(InputListener listener) {
@@ -128,6 +141,27 @@ public class InputPanel extends JPanel {
     /*
      * Private Listeners
      */
+    
+    private class EquationFieldListener implements DocumentListener {
+
+        @Override
+        public void changedUpdate(DocumentEvent e) {}
+
+        public void insertUpdate(DocumentEvent e) {
+            fireEvent();
+        }
+
+        public void removeUpdate(DocumentEvent e) {
+            fireEvent();
+        }
+        
+        private void fireEvent() {
+            System.out.println(equationField.getText());
+            for (InputListener listener : listeners) {
+                listener.equationChanged( equationField.getText() );
+            }
+        }
+    }
     
     private class LowerSpinnerListener implements ChangeListener {
         @Override
@@ -176,7 +210,7 @@ public class InputPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event) {
             if (iterationsBox.isSelected()) {
-                iterationSpinner.setValue(true);
+                iterationSpinner.setEnabled(true);
                 for (InputListener listener : listeners) {
                     listener.iterationsSelected();
                 }
@@ -205,7 +239,7 @@ public class InputPanel extends JPanel {
         @Override
         public void actionPerformed(ActionEvent event) {
             if (accuracyBox.isSelected()) {
-                accuracySpinner.setValue(true);
+                accuracySpinner.setEnabled(true);
                 for (InputListener listener : listeners) {
                     listener.accuracySelected();
                 }
