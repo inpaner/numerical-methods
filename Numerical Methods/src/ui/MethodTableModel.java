@@ -1,5 +1,7 @@
 package ui;
 
+import java.text.DecimalFormat;
+
 import javax.swing.table.AbstractTableModel;
 
 import methods.Method;
@@ -49,11 +51,14 @@ public class MethodTableModel extends AbstractTableModel {
         
         // iteration number
         if (colIndex == 0) {
-            value = rowIndex + 1;
+            value = rowIndex;
         }
         else {
             int valuesColumn = colIndex - 1;
-            value = method.getIterationValues().get(rowIndex).get(valuesColumn);
+            double iterationValue = method.getIterationValues().get(rowIndex).get(valuesColumn);
+            
+            DecimalFormat df = new DecimalFormat("0.000000");
+            value = df.format(iterationValue);    
         }
         
         return value;
