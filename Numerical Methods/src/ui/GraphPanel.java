@@ -31,8 +31,8 @@ public class GraphPanel extends JPanel {
         dataset = new XYSeriesCollection();
         
         JFreeChart chart = ChartFactory.createXYLineChart("Polynomial",
-                "Mean",
-                "Count",
+                "",
+                "",
                 dataset,
                 PlotOrientation.VERTICAL,
                 true,

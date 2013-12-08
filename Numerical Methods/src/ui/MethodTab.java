@@ -32,7 +32,7 @@ public class MethodTab extends JPanel {
         JLabel iterationsLabel = new JLabel("Iterations: ");
         iterationsValue = new JLabel("");
         
-        JLabel fOfXLabel = new JLabel("Final f(x): ");
+        JLabel fOfXLabel = new JLabel("Accuracy: ");
         fOfXValue = new JLabel("");
         
         // table
