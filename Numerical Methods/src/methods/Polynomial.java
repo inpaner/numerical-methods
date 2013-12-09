@@ -9,11 +9,11 @@ public class Polynomial {
     public static void main(String[] args) {
         List<Double> c = new ArrayList<Double>();
         c.add(1.0);
-        c.add(0.0);
-        c.add(-78.8);
+        c.add(1.0);
+        
         Polynomial p = new Polynomial(c);
-        System.out.println(p.toString());
-        System.out.println(p.evaluate(6.0));
+        System.out.println(p);
+        System.out.println(p.getDerivative());
     }
     
     public Polynomial(double... coefficients) {
@@ -65,8 +65,6 @@ public class Polynomial {
         
         if (degree ==  0) 
             return "" + coefficients.get(0);
-        if (degree ==  1) 
-            return coefficients.get(0) + "x + " + coefficients.get(1);
         
         StringBuilder equation = new StringBuilder();
         for (double coefficient : coefficients) {
@@ -93,6 +91,7 @@ public class Polynomial {
             
             degree--;
         } 
+        
         String result = equation.toString();
         if (result.startsWith(" + ")) {
             result = result.substring(3);
@@ -101,14 +100,22 @@ public class Polynomial {
         return result;
     }
     
-    public Polynomial differentiate() {
-        List<Double> derivCoefficients = new ArrayList<>();
+    public Polynomial getDerivative() {
+        List<Double> derivativeCoefficients = new ArrayList<>();
         int degree = getDegree();
-        for (double coefficient : coefficients) {
-            if (degree != 0)
-                derivCoefficients.add(coefficient * degree);
+        if (degree == 0) {
+            derivativeCoefficients.add(0.0);
         }
+        else {
+            for (double coefficient : coefficients) {
         
-        return new Polynomial(derivCoefficients);
+                    if (degree != 0) {
+                        derivativeCoefficients.add(coefficient * degree);
+                    }
+                    degree--;
+                
+            }
+        }
+        return new Polynomial(derivativeCoefficients);
     }
 }
