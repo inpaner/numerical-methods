@@ -5,7 +5,7 @@ public class IterationChecker {
     private static boolean isActive = true;
     
     public static boolean isFinishedIterating(int iterations) {
-        boolean isFinished = true; 
+        boolean isFinished = false; 
         if (IterationChecker.isActive) {
                isFinished = iterations >= totalIterations;  
         }

@@ -5,7 +5,7 @@ public class AccuracyChecker {
     private static boolean isActive = true;
     
     public static boolean isAccurate(double y) {
-        boolean isAccurate = true; 
+        boolean isAccurate = false; 
         if (AccuracyChecker.isActive) {
             isAccurate = Math.abs(y) < accuracy;   
         }
