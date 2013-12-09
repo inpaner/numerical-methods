@@ -1,9 +1,11 @@
 package  ui;
 
-import java.awt.BorderLayout;
-import java.util.Map;
-
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.swing.JCheckBox;
 import javax.swing.JPanel;
+
+import net.miginfocom.swing.MigLayout;
 
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
@@ -19,9 +21,11 @@ import methods.Polynomial;
 public class GraphPanel extends JPanel {
     private final int GRAPH_STEPS = 100;
     private Polynomial polynomial;
+    private Line line;
     private XYSeriesCollection dataset;
     private double inputLowerBound;
     private double inputUpperBound;
+    private JCheckBox zoomBox;
 
     GraphPanel() {
         dataset = new XYSeriesCollection();
@@ -35,7 +39,13 @@ public class GraphPanel extends JPanel {
                 false,
                 false);
         ChartPanel panel = new ChartPanel(chart);
-        add(panel, BorderLayout.CENTER);    
+        
+        zoomBox = new JCheckBox("Zoom on line");
+        zoomBox.addActionListener(new ZoomBoxListener());
+        
+        setLayout(new MigLayout("wrap 1"));
+        add(panel);
+        add(zoomBox);
     }
     
     void updatePolynomial(Polynomial polynomial, double lowerBound, double upperBound) {
@@ -43,6 +53,7 @@ public class GraphPanel extends JPanel {
         this.polynomial = polynomial;
         inputLowerBound = lowerBound;
         inputUpperBound = upperBound;
+        line = null;
         
         dataset.removeAllSeries();
         XYSeries polynomialSeries = createPolynomialSeries(polynomial, lowerBound, upperBound);
@@ -65,18 +76,24 @@ public class GraphPanel extends JPanel {
     }
     
     void updateLine(Line line) {
+        this.line = line;
+        plotPolynomialAndLine();
+    }
+    
+    private void plotPolynomialAndLine() {
         XYSeries lineSeries = new XYSeries("");
         lineSeries.add(line.getX0(), line.getY0());
         lineSeries.add(line.getX1(), line.getY1());
         
-        System.out.println("inputlb: " + inputLowerBound + " ,x0: " + line.getX0());
-        
         double chartLowerBound = inputLowerBound;
-        if (chartLowerBound > Math.min(line.getX0(), line.getX1())) {
+        if (chartLowerBound > Math.min(line.getX0(), line.getX1()) 
+                || zoomBox.isSelected()) {
             chartLowerBound = Math.min(line.getX0(), line.getX1());
         }
+        
         double chartUpperBound = inputUpperBound;
-        if (chartUpperBound < Math.max(line.getX0(), line.getX1())) {
+        if (chartUpperBound < Math.max(line.getX0(), line.getX1())
+                || zoomBox.isSelected()) {
             chartUpperBound = Math.max(line.getX0(), line.getX1());
         }
         
@@ -86,5 +103,12 @@ public class GraphPanel extends JPanel {
         dataset.removeAllSeries();
         dataset.addSeries(polynomialSeries);
         dataset.addSeries(lineSeries);
+    }
+    
+    private class ZoomBoxListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            plotPolynomialAndLine();
+        }
     }
 }

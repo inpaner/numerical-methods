@@ -13,6 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
+import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
@@ -39,7 +40,7 @@ public class InputPanel extends JPanel {
     public InputPanel() {
         // Equation
         equationField = new JTextField(20);
-        equationLabel = new JLabel("<html>2x<sup>10</sup></html>");
+        equationLabel = new JLabel(" ");
         
         
         // Interval
@@ -181,10 +182,16 @@ public class InputPanel extends JPanel {
         return (double) upperSpinner.getValue();
     }
     
+    void setInvalid() {
+        equationLabel.setText("Invalid");
+    }
+
+    
     void addListener(InputListener listener) {
         listeners.add(listener);
     }
 
+    
     /*
      * Private Listeners
      */

@@ -49,7 +49,7 @@ public class Main {
                 refreshEquations();
             }
             else {
-                System.out.println("INVALID");
+                panel.setInvalid();
             }
         }
         

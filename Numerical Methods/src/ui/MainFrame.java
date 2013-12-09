@@ -8,8 +8,11 @@ import javax.swing.*;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame {
+    private final String TITLE = "Numerical Methods";
+    private final int HEIGHT = 800;
+    private final int WIDTH = 600;
     private JComponent component;
-
+    
     public MainFrame() {
         final String look = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
 
@@ -24,8 +27,8 @@ public class MainFrame extends JFrame {
             }
         });
         
-        setTitle("Numerical Methods");
-        setSize(750, 750);
+        setTitle(TITLE);
+        setSize(HEIGHT, WIDTH);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(true);
