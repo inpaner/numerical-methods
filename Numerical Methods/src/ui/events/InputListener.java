@@ -5,7 +5,9 @@ public interface InputListener {
     
     void upperLimitChanged(double x);
     void lowerLimitChanged(double x);
-    void startingPointChanged(double x);
+    
+    void upperBoundAsStart();
+    void lowerBoundAsStart();    
     
     void iterationLimitChanged(int iterations);
     void iterationsSelected();
@@ -14,4 +16,5 @@ public interface InputListener {
     void accuracyLimitChanged(double accuracy);
     void accuracySelected();
     void accuracyDeselected();
+
 }

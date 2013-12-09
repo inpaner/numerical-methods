@@ -18,9 +18,10 @@ public class Main {
     private RegulaFalsi falsi;
     private NewtonRaphson newton;
     private Secant secant;
+    
+    private boolean lowerLimitIsStart = true;
     private double upperLimit;
     private double lowerLimit;
-    private double startingPoint;
     private MainPanel panel;
     
     public static void main(String[] args) {
@@ -29,7 +30,7 @@ public class Main {
     
     void begin() {
         upperLimit = 10;
-        lowerLimit = 0;
+        lowerLimit = -10;
         
         MainFrame frame = new MainFrame();
         panel = new MainPanel();
@@ -41,9 +42,18 @@ public class Main {
     private void refreshEquations() {
         bisection = new Bisection(currentPolynomial, lowerLimit, upperLimit);
         falsi = new RegulaFalsi(currentPolynomial, lowerLimit, upperLimit);
-        newton = new NewtonRaphson(currentPolynomial, lowerLimit);
+        newton = new NewtonRaphson(currentPolynomial, getStartingPoint());
         secant = new Secant(currentPolynomial, lowerLimit, upperLimit);
         panel.updateMethods(bisection, falsi, newton, secant);
+    }
+    
+    private double getStartingPoint() {
+        if (lowerLimitIsStart) {
+            return lowerLimit;
+        }
+        else {
+            return upperLimit;
+        }
     }
     
     private class InputListenerI implements InputListener {
@@ -70,13 +80,20 @@ public class Main {
             lowerLimit = x;
             refreshEquations();
         }
-
+        
         @Override
-        public void startingPointChanged(double x) {
-            startingPoint = x;
+        public void lowerBoundAsStart() {
+            lowerLimitIsStart = true;
             refreshEquations();
         }
-
+        
+        @Override
+        public void upperBoundAsStart() {
+            lowerLimitIsStart = false;
+            refreshEquations();
+        }
+        
+        
         @Override
         public void iterationLimitChanged(int iterations) {
             IterationChecker.setTotalIterations(iterations);

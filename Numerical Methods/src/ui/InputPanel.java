@@ -6,14 +6,14 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JCheckBox;
 import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSpinner;
-import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingUtilities;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
@@ -31,7 +31,6 @@ public class InputPanel extends JPanel {
     private JLabel equationLabel;
     private JSpinner lowerSpinner;
     private JSpinner upperSpinner;
-    private JSpinner startSpinner;
     private JSpinner iterationSpinner;
     private JSpinner accuracySpinner;
     private JCheckBox iterationsBox;
@@ -43,7 +42,6 @@ public class InputPanel extends JPanel {
         String hint = "format: -4 15 -1 5";
         equationField.setHint(hint);
         equationLabel = new JLabel(" ");
-        
         
         // Interval
         JLabel intervalLabel = new JLabel("Interval: ");
@@ -66,12 +64,12 @@ public class InputPanel extends JPanel {
         // Starting point 
         JLabel startLabel = new JLabel("Starting Point: ");
         
-        startSpinner = new JSpinner( new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 0.1) );
-        field = ((JSpinner.DefaultEditor) startSpinner.getEditor());
-        prefSize = field.getPreferredSize();
-        prefSize = new Dimension(30, prefSize.height);
-        field.setPreferredSize(prefSize);
-        
+        JRadioButton lowerRadio = new JRadioButton("Lower bound");
+        JRadioButton upperRadio = new JRadioButton("Upper bound");
+        lowerRadio.setSelected(true);
+        ButtonGroup startGroup = new ButtonGroup();
+        startGroup.add(lowerRadio);
+        startGroup.add(upperRadio);
         
         // Iterations
         iterationsBox = new JCheckBox("Iterations: ");
@@ -96,7 +94,8 @@ public class InputPanel extends JPanel {
         equationField.getDocument().addDocumentListener(new EquationFieldListener());
         lowerSpinner.addChangeListener(new LowerSpinnerListener());
         upperSpinner.addChangeListener(new UpperSpinnerListener());
-        startSpinner.addChangeListener(new StartSpinnerListener());
+        lowerRadio.addActionListener(new LowerRadioListener());
+        upperRadio.addActionListener(new UpperRadioListener());
         iterationsBox.addActionListener(new IterationsBoxListener());
         iterationSpinner.addChangeListener(new IterationsValueListener());
         accuracyBox.addActionListener(new AccuracyBoxListener());
@@ -115,7 +114,8 @@ public class InputPanel extends JPanel {
         add(upperSpinner, "wrap");
         
         add(startLabel);
-        add(startSpinner, "wrap 10");
+        add(lowerRadio);
+        add(upperRadio, "skip, wrap");
         
         add(iterationsBox);
         add(iterationSpinner, "wrap");
@@ -128,6 +128,7 @@ public class InputPanel extends JPanel {
     private void setDefaultValues() {
         iterationsBox.setSelected(true);
         accuracyBox.setSelected(true);
+        lowerSpinner.setValue(-10.0);
         upperSpinner.setValue(10.0);
         iterationSpinner.setValue(50);
         accuracySpinner.setValue(0.001);
@@ -250,16 +251,24 @@ public class InputPanel extends JPanel {
         }
     }
     
-    private class StartSpinnerListener implements ChangeListener {
+    private class LowerRadioListener implements ActionListener {
         @Override
-        public void stateChanged(ChangeEvent event) {         
-            int startingPoint = (Integer) startSpinner.getValue();
-            
+        public void actionPerformed(ActionEvent event) {        
             for (InputListener listener : listeners) {
-                listener.startingPointChanged(startingPoint);
+                listener.lowerBoundAsStart();
             }
         }
     }
+    
+    private class UpperRadioListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent event) {        
+            for (InputListener listener : listeners) {
+                listener.upperBoundAsStart();
+            }
+        }
+    }
+    
     
     private class IterationsBoxListener implements ActionListener {  
         @Override
