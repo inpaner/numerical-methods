@@ -8,15 +8,18 @@ import javax.swing.event.ChangeListener;
 
 import ui.events.InputListener;
 import ui.events.MethodTabListener;
+import methods.Bisection;
 import methods.Method;
 import methods.Polynomial;
 import methods.RegulaFalsi;
 import methods.Secant;
 import net.miginfocom.swing.MigLayout;
 
+@SuppressWarnings("serial")
 public class MainPanel extends JPanel {
     
-    private JTabbedPane tabPane;    
+    private JTabbedPane tabPane;
+    private MethodTab bisectionTab;
     private MethodTab falsiTab;
     private MethodTab secantTab;
     private GraphPanel graphPanel;
@@ -27,10 +30,12 @@ public class MainPanel extends JPanel {
          * Init components
          */
         inputPanel = new InputPanel();
+        bisectionTab = new MethodTab();
         falsiTab = new MethodTab();
         secantTab = new MethodTab();
         
         tabPane = new JTabbedPane();
+        tabPane.add("Bisection", bisectionTab);
         tabPane.add("Regula Falsi", falsiTab);
         tabPane.add("Secant", secantTab);
         
@@ -45,10 +50,10 @@ public class MainPanel extends JPanel {
         /*
          * Add listeners
          */
+        bisectionTab.addListener(new MethodTabListenerI());
         falsiTab.addListener(new MethodTabListenerI());
         secantTab.addListener(new MethodTabListenerI());   
         tabPane.addChangeListener(new TabPaneListener());
-        
         
         /*
          * Add components
@@ -65,7 +70,8 @@ public class MainPanel extends JPanel {
         graphPanel.updatePolynomial(polynomial, lowerBound, upperBound);
     }
 
-    public void updateMethods(RegulaFalsi falsi, Secant secant) {
+    public void updateMethods(Bisection bisection, RegulaFalsi falsi, Secant secant) {
+        bisectionTab.updateMethod(bisection);
         falsiTab.updateMethod(falsi);
         secantTab.updateMethod(secant);
         updatePolynomial(falsi.getPolynomial());

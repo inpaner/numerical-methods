@@ -3,14 +3,14 @@ package methods;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Binomial extends Method {
+public class Bisection extends Method {
     private Polynomial function;
     private double x0;
     private double x1;
     private double x2 = 0;
     
     
-    protected Binomial(Polynomial polynomial, double x0, double x1) {
+    public Bisection(Polynomial polynomial, double x0, double x1) {
         super(polynomial);
         function = polynomial;
         this.x0 = x0;
@@ -53,7 +53,6 @@ public class Binomial extends Method {
         row.add(function.evaluate(x1));
         iterationValues.add(row);
     }
-
 
     @Override
     protected double getY() {

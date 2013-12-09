@@ -9,6 +9,9 @@ import javax.swing.JTextField;
 import javax.swing.plaf.basic.BasicTextFieldUI;
 import javax.swing.text.JTextComponent;
 
+/*
+ * http://blogs.sequoiainc.com/blogs/java-swing-hint-text-on-a-jtextfield
+ */
 @SuppressWarnings("serial")
 public class HintedJTextField extends JTextField {
     HintedJTextField(int columns) {

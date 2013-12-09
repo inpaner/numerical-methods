@@ -9,12 +9,6 @@ public class RegulaFalsi extends Method {
     private double x1;
     private double x2 = 0;
     
-    public static void main(String[] args) {
-        Polynomial poly = new Polynomial(1, 0, -78.8);
-        System.out.println(poly);
-        RegulaFalsi falsi = new RegulaFalsi(poly, 6, 12);
-    }
-    
     public RegulaFalsi(Polynomial polynomial, double x0, double x1) {
         super(polynomial);
         function = polynomial;

@@ -1,4 +1,5 @@
 import methods.AccuracyChecker;
+import methods.Bisection;
 import methods.IterationChecker;
 import methods.Polynomial;
 import methods.PolynomialValidator;
@@ -12,6 +13,7 @@ import ui.events.InputListener;
 
 public class Main {
     private Polynomial currentPolynomial;
+    private Bisection bisection;
     private RegulaFalsi falsi;
     private Secant secant;
     private double upperLimit;
@@ -35,9 +37,10 @@ public class Main {
     }
     
     private void refreshEquations() {
+        bisection = new Bisection(currentPolynomial, lowerLimit, upperLimit);
         falsi = new RegulaFalsi(currentPolynomial, lowerLimit, upperLimit);
         secant = new Secant(currentPolynomial, lowerLimit, upperLimit);
-        panel.updateMethods(falsi, secant);
+        panel.updateMethods(bisection, falsi, secant);
     }
     
     private class InputListenerI implements InputListener {
