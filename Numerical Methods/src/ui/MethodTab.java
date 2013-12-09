@@ -1,32 +1,30 @@
 package ui;
 
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.ListSelectionModel;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 
-import net.miginfocom.swing.MigLayout;
 import methods.Method;
 import methods.Polynomial;
 import methods.RegulaFalsi;
+import net.miginfocom.swing.MigLayout;
+import ui.events.MethodTabListener;
 
+@SuppressWarnings("serial")
 public class MethodTab extends JPanel {
     private Method method;
     private JLabel iterationsValue;
     private JTable iterationsTable;
     private JLabel fOfXValue;
-    
-    public static void main(String[] args) {
-        MainFrame frame = new MainFrame();
-        MethodTab tab = new MethodTab();
-        frame.setPanel(tab);
-        Polynomial poly = new Polynomial(1, 0, -78.8);
-        RegulaFalsi falsi = new RegulaFalsi(poly, 6, 12);
-        Method method = new RegulaFalsi(poly, 0, 10);
-        tab.updateMethod(falsi);
-    }
+    private List<MethodTabListener> listeners = new ArrayList<>();
     
     MethodTab() {
         JLabel iterationsLabel = new JLabel("Iterations: ");
@@ -37,14 +35,20 @@ public class MethodTab extends JPanel {
         
         // table
         iterationsTable = new JTable();
-        JScrollPane tablePane = new JScrollPane(iterationsTable);
+        iterationsTable.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        iterationsTable.getSelectionModel().addListSelectionListener(new ListListener());
         
+        JScrollPane tablePane = new JScrollPane(iterationsTable);
         setLayout(new MigLayout("wrap 2"));
         add(iterationsLabel);
         add(iterationsValue);
         add(fOfXLabel);
         add(fOfXValue);
         add(tablePane, "span, split");
+    }
+    
+    void addListener(MethodTabListener listener) {
+        listeners.add(listener);
     }
     
     void updateMethod(Method method) {
@@ -61,5 +65,24 @@ public class MethodTab extends JPanel {
     
     Method getMethod() {
         return method;
+    }
+    
+    int getSelectedIteration() {
+        return iterationsTable.getSelectedRow();
+    }
+    
+    private class ListListener implements ListSelectionListener {
+        @Override
+        public void valueChanged(ListSelectionEvent ev) {
+            int index = iterationsTable.getSelectedRow();
+            
+            if (index == -1) 
+                return;
+            
+            for (MethodTabListener listener : listeners) {
+                listener.selectedIteration(index);
+            }
+        
+        }
     }
 }

@@ -7,6 +7,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import ui.events.InputListener;
+import ui.events.MethodTabListener;
 import methods.Method;
 import methods.Polynomial;
 import methods.RegulaFalsi;
@@ -22,6 +23,9 @@ public class MainPanel extends JPanel {
     private InputPanel inputPanel;
     
     public MainPanel() { 
+        /*
+         * Init components
+         */
         inputPanel = new InputPanel();
         falsiTab = new MethodTab();
         secantTab = new MethodTab();
@@ -29,7 +33,6 @@ public class MainPanel extends JPanel {
         tabPane = new JTabbedPane();
         tabPane.add("Regula Falsi", falsiTab);
         tabPane.add("Secant", secantTab);
-        tabPane.addChangeListener(new TabPaneListener());
         
         
         graphPanel = new GraphPanel(); 
@@ -38,6 +41,18 @@ public class MainPanel extends JPanel {
                 JSplitPane.HORIZONTAL_SPLIT,
                 tabPane, graphPanel);
         
+        /*
+         * Add listeners
+         */
+        falsiTab.addListener(new MethodTabListenerI());
+        secantTab.addListener(new MethodTabListenerI());
+        
+        tabPane.addChangeListener(new TabPaneListener());
+        
+        
+        /*
+         * Add components
+         */
         setLayout(new MigLayout());
         add(inputPanel, "wrap");
         add(lowerPane);
@@ -47,7 +62,7 @@ public class MainPanel extends JPanel {
         inputPanel.addListener(listener);
     }
     
-    public void updatePolynomial(Polynomial polynomial) {
+    void updatePolynomial(Polynomial polynomial) {
         double lowerBound = inputPanel.getLowerBound();
         double upperBound = inputPanel.getUpperBound();
         graphPanel.updatePolynomial(polynomial, lowerBound, upperBound);
@@ -59,17 +74,40 @@ public class MainPanel extends JPanel {
         updatePolynomial(falsi.getPolynomial());
     }
     
-    private class TabPaneListener implements ChangeListener {
-        @Override
-        public void stateChanged(ChangeEvent e) {
-            Method selectedMethod = getSelectedMethod();
-            graphPanel.updateLine(selectedMethod.getIterationLine(0));
-        }
-    }
-    
     private Method getSelectedMethod() {
         int selectedTabIndex = tabPane.getSelectedIndex();
         MethodTab tab = (MethodTab) tabPane.getComponentAt(selectedTabIndex);
         return tab.getMethod();
     }
+    
+    private int getSelectedIteration() {
+        int selectedTabIndex = tabPane.getSelectedIndex();
+        MethodTab tab = (MethodTab) tabPane.getComponentAt(selectedTabIndex);
+        return tab.getSelectedIteration();
+    }
+    
+    /*
+     * Internal listeners
+     */
+    
+    private class TabPaneListener implements ChangeListener {
+        @Override
+        public void stateChanged(ChangeEvent e) {
+            Method selectedMethod = getSelectedMethod();
+            int iteration = getSelectedIteration();
+            graphPanel.updateLine(selectedMethod.getIterationLine(iteration));
+        }
+    }
+    
+    private class MethodTabListenerI implements MethodTabListener {
+
+        @Override
+        public void selectedIteration(int iteration) {
+            Method selectedMethod = getSelectedMethod();
+            graphPanel.updateLine(selectedMethod.getIterationLine(iteration));
+        }
+        
+    }
+    
+    
 }

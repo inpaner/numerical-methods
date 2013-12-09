@@ -15,20 +15,12 @@ import org.jfree.data.xy.XYSeriesCollection;
 import methods.Line;
 import methods.Polynomial;
 
+@SuppressWarnings("serial")
 public class GraphPanel extends JPanel {
     private final int GRAPH_STEPS = 100;
-    private Polynomial polynomial;
     private XYSeriesCollection dataset;
     private XYSeries polynomialSeries;
 
-    public static void main(String[] args) {
-        MainFrame frame = new MainFrame();
-        GraphPanel panel = new GraphPanel();
-        Polynomial poly = new Polynomial(1, -6, 0, 0, 0);
-        panel.updatePolynomial(poly, 0, 6);
-        frame.setPanel(panel);
-    }
-    
     GraphPanel() {
         dataset = new XYSeriesCollection();
         
@@ -47,7 +39,6 @@ public class GraphPanel extends JPanel {
     void updatePolynomial(Polynomial polynomial, double lowerBound, double upperBound) {
         assert lowerBound <= upperBound : "lower bound > upper bound";
         
-        this.polynomial = polynomial;
         dataset.removeAllSeries();
         polynomialSeries = new XYSeries(polynomial.toString());
         
@@ -57,7 +48,6 @@ public class GraphPanel extends JPanel {
         for (double x = lowerBound; x <= upperBound; x += stepSize) {
             double y = polynomial.evaluate(x);
             polynomialSeries.add(x, y);
-            System.out.println(x + "," + y);
         }
         
         dataset.addSeries(polynomialSeries);
