@@ -16,6 +16,7 @@ public class RegulaFalsi extends Method {
     }
     
     public RegulaFalsi(Polynomial polynomial, double x0, double x1) {
+        super(polynomial);
         function = polynomial;
         this.x0 = x0;
         this.x1 = x1;

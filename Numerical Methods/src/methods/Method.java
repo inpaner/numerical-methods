@@ -7,6 +7,11 @@ public abstract class Method {
     private boolean isSolved = false;
     private List<List<Double>> iterationValues; 
     private int iterations;
+    private Polynomial polynomial;
+    
+    protected Method(Polynomial polynomial) {
+        this.polynomial = polynomial;
+    }
     
     public List<List<Double>> getIterationValues() {
         if (!isSolved) {
@@ -29,11 +34,29 @@ public abstract class Method {
         return getY();
     }
     
+    public Polynomial getPolynomial() {
+        return polynomial;
+    }
+    
     public abstract List<String> getColumnNames();
     
     protected abstract void iterate();
     protected abstract void addIterationRow(List<List<Double>> iterationValues);
     protected abstract double getY();
+    
+    public Line getIterationLine(int iteration) {
+        if (!isSolved) {
+            solveAndStoreValues();
+        }
+        
+        List<Double> iterationValue = iterationValues.get(iteration);
+        double x0 = iterationValue.get(0);
+        double x1 = iterationValue.get(1);
+        double y0 = iterationValue.get(2);
+        double y1 = iterationValue.get(3);
+        
+        return new Line(x0, y0, x1, y1);
+    }
     
     protected boolean isFinished() {
         boolean result = false;

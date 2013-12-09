@@ -12,22 +12,24 @@ import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.xy.XYSeries;
 import org.jfree.data.xy.XYSeriesCollection;
 
+import methods.Line;
 import methods.Polynomial;
 
 public class GraphPanel extends JPanel {
     private final int GRAPH_STEPS = 100;
     private Polynomial polynomial;
     private XYSeriesCollection dataset;
+    private XYSeries polynomialSeries;
 
     public static void main(String[] args) {
         MainFrame frame = new MainFrame();
         GraphPanel panel = new GraphPanel();
         Polynomial poly = new Polynomial(1, -6, 0, 0, 0);
-        panel.updateGraph(poly, 0, 6);
+        panel.updatePolynomial(poly, 0, 6);
         frame.setPanel(panel);
     }
     
-    public GraphPanel() {
+    GraphPanel() {
         dataset = new XYSeriesCollection();
         
         JFreeChart chart = ChartFactory.createXYLineChart("Polynomial",
@@ -42,22 +44,32 @@ public class GraphPanel extends JPanel {
         add(panel, BorderLayout.CENTER);    
     }
     
-    public void updateGraph(Polynomial polynomial, int lowerBound, int upperBound) {
+    void updatePolynomial(Polynomial polynomial, double lowerBound, double upperBound) {
         assert lowerBound <= upperBound : "lower bound > upper bound";
         
         this.polynomial = polynomial;
         dataset.removeAllSeries();
-        XYSeries series = new XYSeries(polynomial.toString());
+        polynomialSeries = new XYSeries(polynomial.toString());
         
         double range = upperBound - lowerBound;
         double stepSize = range / GRAPH_STEPS; 
         
         for (double x = lowerBound; x <= upperBound; x += stepSize) {
             double y = polynomial.evaluate(x);
-            series.add(x, y);
+            polynomialSeries.add(x, y);
             System.out.println(x + "," + y);
         }
-        dataset.addSeries(series);
-        System.out.println(polynomial);
+        
+        dataset.addSeries(polynomialSeries);
+    }
+    
+    void updateLine(Line line) {
+        XYSeries lineSeries = new XYSeries("");
+        lineSeries.add(line.getX0(), line.getY0());
+        lineSeries.add(line.getX1(), line.getY1());
+        
+        dataset.removeAllSeries();
+        dataset.addSeries(polynomialSeries);
+        dataset.addSeries(lineSeries);
     }
 }

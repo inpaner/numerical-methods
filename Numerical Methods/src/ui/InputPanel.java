@@ -35,12 +35,6 @@ public class InputPanel extends JPanel {
     private JCheckBox iterationsBox;
     private JCheckBox accuracyBox;
     
-    public static void main(String[] args) {
-        MainFrame frame = new MainFrame();
-        InputPanel panel = new InputPanel();
-        frame.setPanel(panel);
-    }
-    
     public InputPanel() {
         // Equation
         equationField = new JTextField(20);
@@ -50,7 +44,7 @@ public class InputPanel extends JPanel {
         // Interval
         JLabel intervalLabel = new JLabel("Interval: ");
         
-        lowerSpinner = new JSpinner( new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1) );
+        lowerSpinner = new JSpinner( new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 0.1) );
         JComponent field = ((JSpinner.DefaultEditor) lowerSpinner.getEditor());
         Dimension prefSize = field.getPreferredSize();
         prefSize = new Dimension(30, prefSize.height);
@@ -58,7 +52,7 @@ public class InputPanel extends JPanel {
         
         JLabel toLabel = new JLabel("to: ");
         
-        upperSpinner = new JSpinner( new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1) );
+        upperSpinner = new JSpinner( new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 0.1) );
         field = ((JSpinner.DefaultEditor) upperSpinner.getEditor());
         prefSize = field.getPreferredSize();
         prefSize = new Dimension(30, prefSize.height);
@@ -68,7 +62,7 @@ public class InputPanel extends JPanel {
         // Starting point 
         JLabel startLabel = new JLabel("Starting Point: ");
         
-        startSpinner = new JSpinner( new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 1) );
+        startSpinner = new JSpinner( new SpinnerNumberModel(0, Integer.MIN_VALUE, Integer.MAX_VALUE, 0.1) );
         field = ((JSpinner.DefaultEditor) startSpinner.getEditor());
         prefSize = field.getPreferredSize();
         prefSize = new Dimension(30, prefSize.height);
@@ -130,12 +124,22 @@ public class InputPanel extends JPanel {
     private void setDefaultValues() {
         iterationsBox.setSelected(true);
         accuracyBox.setSelected(true);
+        upperSpinner.setValue(10.0);
+        iterationSpinner.setValue(50);
+        accuracySpinner.setValue(0.001);
     }
     
     public void addListener(InputListener listener) {
         listeners.add(listener);
     }
     
+    double getLowerBound() {
+        return (double) lowerSpinner.getValue();
+    }
+    
+    double getUpperBound() {
+        return (double) upperSpinner.getValue();
+    }
     
     /*
      * Private Listeners
@@ -164,8 +168,8 @@ public class InputPanel extends JPanel {
     private class LowerSpinnerListener implements ChangeListener {
         @Override
         public void stateChanged(ChangeEvent event) {         
-            int lowerLimit = (Integer) lowerSpinner.getValue();
-            int upperLimit = (Integer) upperSpinner.getValue();
+            double lowerLimit = (Double) lowerSpinner.getValue();
+            double upperLimit = (Double) upperSpinner.getValue();
             
             if (lowerLimit > upperLimit) {
                 upperLimit = lowerLimit;
@@ -180,8 +184,8 @@ public class InputPanel extends JPanel {
     private class UpperSpinnerListener implements ChangeListener {
         @Override
         public void stateChanged(ChangeEvent event) {         
-            int lowerLimit = (Integer) lowerSpinner.getValue();
-            int upperLimit = (Integer) upperSpinner.getValue();
+            double lowerLimit = (Double) lowerSpinner.getValue();
+            double upperLimit = (Double) upperSpinner.getValue();
             
             if (upperLimit < lowerLimit) {
                 lowerLimit = upperLimit;   

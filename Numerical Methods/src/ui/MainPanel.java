@@ -7,6 +7,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import ui.events.InputListener;
+import methods.Method;
 import methods.Polynomial;
 import methods.RegulaFalsi;
 import methods.Secant;
@@ -19,12 +20,6 @@ public class MainPanel extends JPanel {
     private MethodTab secantTab;
     private GraphPanel graphPanel;
     private InputPanel inputPanel;
-    
-    public static void main(String[] args) {
-        MainFrame frame = new MainFrame();
-        MainPanel panel = new MainPanel();
-        frame.setPanel(panel);
-    }
     
     public MainPanel() { 
         inputPanel = new InputPanel();
@@ -53,19 +48,28 @@ public class MainPanel extends JPanel {
     }
     
     public void updatePolynomial(Polynomial polynomial) {
-        
+        double lowerBound = inputPanel.getLowerBound();
+        double upperBound = inputPanel.getUpperBound();
+        graphPanel.updatePolynomial(polynomial, lowerBound, upperBound);
     }
     
     public void updateMethods(RegulaFalsi falsi, Secant secant) {
         falsiTab.updateMethod(falsi);
         secantTab.updateMethod(secant);
+        updatePolynomial(falsi.getPolynomial());
     }
     
     private class TabPaneListener implements ChangeListener {
-        
         @Override
         public void stateChanged(ChangeEvent e) {
-            
+            Method selectedMethod = getSelectedMethod();
+            graphPanel.updateLine(selectedMethod.getIterationLine(0));
         }
+    }
+    
+    private Method getSelectedMethod() {
+        int selectedTabIndex = tabPane.getSelectedIndex();
+        MethodTab tab = (MethodTab) tabPane.getComponentAt(selectedTabIndex);
+        return tab.getMethod();
     }
 }

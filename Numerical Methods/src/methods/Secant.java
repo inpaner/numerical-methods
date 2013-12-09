@@ -15,7 +15,8 @@ public class Secant extends Method {
         Secant secant = new Secant(poly, 12, 10);
     }
     
-    public Secant(Polynomial polynomial, int x0, int x1) {
+    public Secant(Polynomial polynomial, double x0, double x1) {
+        super(polynomial);
         function = polynomial;
         this.x0 = x0;
         this.x1 = x1;

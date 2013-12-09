@@ -58,4 +58,8 @@ public class MethodTab extends JPanel {
         MethodTableModel methodModel = new MethodTableModel( method );
         iterationsTable.setModel( methodModel );
     }
+    
+    Method getMethod() {
+        return method;
+    }
 }

@@ -14,9 +14,9 @@ public class Main {
     private Polynomial currentPolynomial;
     private RegulaFalsi falsi;
     private Secant secant;
-    private int upperLimit;
-    private int lowerLimit;
-    private int startingPoint;
+    private double upperLimit;
+    private double lowerLimit;
+    private double startingPoint;
     private MainPanel panel;
     
     public static void main(String[] args) {
@@ -34,7 +34,6 @@ public class Main {
     private void refreshEquations() {
         falsi = new RegulaFalsi(currentPolynomial, lowerLimit, upperLimit);
         secant = new Secant(currentPolynomial, lowerLimit, upperLimit);
-        
         panel.updateMethods(falsi, secant);
     }
     
@@ -52,19 +51,19 @@ public class Main {
         }
         
         @Override
-        public void upperLimitChanged(int x) {
+        public void upperLimitChanged(double x) {
             upperLimit = x;
             refreshEquations();
         }
 
         @Override
-        public void lowerLimitChanged(int x) {
+        public void lowerLimitChanged(double x) {
             lowerLimit = x;
             refreshEquations();
         }
 
         @Override
-        public void startingPointChanged(int x) {
+        public void startingPointChanged(double x) {
             startingPoint = x;
             refreshEquations();
         }
