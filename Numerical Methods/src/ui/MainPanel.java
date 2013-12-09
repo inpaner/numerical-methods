@@ -1,6 +1,7 @@
 package ui;
 
 import javax.swing.JPanel;
+import javax.swing.JSplitPane;
 import javax.swing.JTabbedPane;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
@@ -35,12 +36,16 @@ public class MainPanel extends JPanel {
         tabPane.add("Secant", secantTab);
         tabPane.addChangeListener(new TabPaneListener());
         
+        
         graphPanel = new GraphPanel(); 
+        
+        JSplitPane lowerPane = new JSplitPane(
+                JSplitPane.HORIZONTAL_SPLIT,
+                tabPane, graphPanel);
         
         setLayout(new MigLayout());
         add(inputPanel, "wrap");
-        add(tabPane);
-        add(graphPanel);
+        add(lowerPane);
     }
     
     public void addInputListener(InputListener listener) {

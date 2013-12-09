@@ -1,4 +1,4 @@
-package ui;
+package  ui;
 
 import java.awt.BorderLayout;
 import java.util.Map;
@@ -38,7 +38,6 @@ public class GraphPanel extends JPanel {
                 true,
                 false,
                 false);
-
         ChartPanel panel = new ChartPanel(chart);
         add(panel, BorderLayout.CENTER);    
     }

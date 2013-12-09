@@ -23,7 +23,6 @@ import ui.events.InputListener;
 
 @SuppressWarnings("serial")
 public class InputPanel extends JPanel {
-    private final int MAX_X = 1000;
     private List<InputListener> listeners = new ArrayList<>();
     
     private JTextField equationField;
@@ -78,7 +77,7 @@ public class InputPanel extends JPanel {
         
         // Iterations
         iterationsBox = new JCheckBox("Iterations: ");
-        iterationSpinner = new JSpinner(new SpinnerNumberModel(0, 0, MAX_X, 1));
+        iterationSpinner = new JSpinner( new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 1) );
         field = ((JSpinner.DefaultEditor) iterationSpinner.getEditor());
         prefSize = field.getPreferredSize();
         prefSize = new Dimension(30, prefSize.height);
@@ -87,7 +86,7 @@ public class InputPanel extends JPanel {
         
         // Accuracy
         accuracyBox = new JCheckBox("Accuracy: ");
-        accuracySpinner = new JSpinner(new SpinnerNumberModel(0, 0, MAX_X, 0.001));
+        accuracySpinner = new PreciseJSpinner( new SpinnerNumberModel(0, 0, Integer.MAX_VALUE, 0.000001) );
         field = ((JSpinner.DefaultEditor) accuracySpinner.getEditor());
         prefSize = field.getPreferredSize();
         prefSize = new Dimension(50, prefSize.height);
