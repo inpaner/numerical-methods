@@ -40,8 +40,8 @@ public class Secant extends Method {
     public List<String> getColumnNames() {
         List<String> result = new ArrayList<>();
         result.add("x0");
-        result.add("x1");
         result.add("y0");
+        result.add("x1");
         result.add("y1");
         return result;
     }
@@ -50,8 +50,8 @@ public class Secant extends Method {
     protected void addIterationRow(List<List<Double>> iterationValues) {
         List<Double> row = new ArrayList<>();
         row.add(x0);
-        row.add(x1);
         row.add(function.evaluate(x0));
+        row.add(x1);
         row.add(function.evaluate(x1));
         iterationValues.add(row);
     }

@@ -51,8 +51,8 @@ public abstract class Method {
         
         List<Double> iterationValue = iterationValues.get(iteration);
         double x0 = iterationValue.get(0);
-        double x1 = iterationValue.get(1);
-        double y0 = iterationValue.get(2);
+        double y0 = iterationValue.get(1);
+        double x1 = iterationValue.get(2);
         double y1 = iterationValue.get(3);
         
         return new Line(x0, y0, x1, y1);
