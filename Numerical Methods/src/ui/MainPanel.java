@@ -62,18 +62,19 @@ public class MainPanel extends JPanel {
         inputPanel.addListener(listener);
     }
     
-    void updatePolynomial(Polynomial polynomial) {
-        double lowerBound = inputPanel.getLowerBound();
-        double upperBound = inputPanel.getUpperBound();
-        graphPanel.updatePolynomial(polynomial, lowerBound, upperBound);
-    }
-    
     public void updateMethods(RegulaFalsi falsi, Secant secant) {
         falsiTab.updateMethod(falsi);
         secantTab.updateMethod(secant);
         updatePolynomial(falsi.getPolynomial());
     }
     
+    void updatePolynomial(Polynomial polynomial) {
+        double lowerBound = inputPanel.getLowerBound();
+        double upperBound = inputPanel.getUpperBound();
+        inputPanel.updateEquation(polynomial);
+        graphPanel.updatePolynomial(polynomial, lowerBound, upperBound);
+    }
+
     private Method getSelectedMethod() {
         int selectedTabIndex = tabPane.getSelectedIndex();
         MethodTab tab = (MethodTab) tabPane.getComponentAt(selectedTabIndex);

@@ -24,6 +24,9 @@ public class Main {
     }
     
     void begin() {
+        upperLimit = 10;
+        lowerLimit = 0;
+        
         MainFrame frame = new MainFrame();
         panel = new MainPanel();
         panel.addInputListener(new InputListenerI());

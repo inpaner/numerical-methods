@@ -18,6 +18,7 @@ import javax.swing.event.ChangeListener;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 
+import methods.Polynomial;
 import net.miginfocom.swing.MigLayout;
 import ui.events.InputListener;
 
@@ -103,7 +104,7 @@ public class InputPanel extends JPanel {
          */
         setLayout(new MigLayout("wrap 5"));
         add(equationField, "span, split, wrap");
-        add(equationLabel, "wrap 10");
+        add(equationLabel, "span, split, wrap 10");
         add(intervalLabel);
         
         add(lowerSpinner);
@@ -129,8 +130,47 @@ public class InputPanel extends JPanel {
         accuracySpinner.setValue(0.001);
     }
     
-    public void addListener(InputListener listener) {
-        listeners.add(listener);
+    void updateEquation(Polynomial polynomial) {
+        StringBuilder equation = new StringBuilder("");
+        List<Double> coefficients = polynomial.getCoefficients();
+        int degree = polynomial.getDegree();
+       
+        for (double coefficient : coefficients) {
+            if (coefficient == 0) {
+                degree--;
+                continue;
+            }
+                
+            if (coefficient > 0) {
+                equation.append(" + ");
+                equation.append(coefficient);
+            }
+            else {
+                equation.append(" – ");
+                equation.append(-coefficient);
+            }
+            
+            if (degree == 1) 
+                equation.append("x");
+            
+            else if (degree > 1) {
+                equation.append("x");
+                equation.append("<sup>");
+                equation.append(degree);
+                equation.append("</sup>");
+            }
+            
+            degree--;
+        }
+        
+        String result = equation.toString();
+        if (result.startsWith(" + ")) {
+            result = result.substring(3);
+        }
+        
+        result = "<html>" + result + "</html>";
+        
+        equationLabel.setText(result);
     }
     
     double getLowerBound() {
@@ -141,6 +181,10 @@ public class InputPanel extends JPanel {
         return (double) upperSpinner.getValue();
     }
     
+    void addListener(InputListener listener) {
+        listeners.add(listener);
+    }
+
     /*
      * Private Listeners
      */

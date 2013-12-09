@@ -45,6 +45,10 @@ public class Polynomial {
         return coefficients.size() - 1;
     }
     
+    public List<Double> getCoefficients() {
+        return coefficients;
+    }
+    
     public double evaluate(double x) {
         double result = 0;
         int degree = getDegree();
