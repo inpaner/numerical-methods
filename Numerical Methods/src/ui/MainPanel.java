@@ -10,6 +10,7 @@ import ui.events.InputListener;
 import ui.events.MethodTabListener;
 import methods.Bisection;
 import methods.Method;
+import methods.NewtonRaphson;
 import methods.Polynomial;
 import methods.RegulaFalsi;
 import methods.Secant;
@@ -21,6 +22,7 @@ public class MainPanel extends JPanel {
     private JTabbedPane tabPane;
     private MethodTab bisectionTab;
     private MethodTab falsiTab;
+    private MethodTab newtonTab;
     private MethodTab secantTab;
     private GraphPanel graphPanel;
     private InputPanel inputPanel;
@@ -32,11 +34,13 @@ public class MainPanel extends JPanel {
         inputPanel = new InputPanel();
         bisectionTab = new MethodTab();
         falsiTab = new MethodTab();
+        newtonTab = new MethodTab();
         secantTab = new MethodTab();
         
         tabPane = new JTabbedPane();
         tabPane.add("Bisection", bisectionTab);
         tabPane.add("Regula Falsi", falsiTab);
+        tabPane.add("Newton-Raphson", newtonTab);
         tabPane.add("Secant", secantTab);
         
         
@@ -52,6 +56,7 @@ public class MainPanel extends JPanel {
          */
         bisectionTab.addListener(new MethodTabListenerI());
         falsiTab.addListener(new MethodTabListenerI());
+        newtonTab.addListener(new MethodTabListenerI());
         secantTab.addListener(new MethodTabListenerI());   
         tabPane.addChangeListener(new TabPaneListener());
         
@@ -70,9 +75,10 @@ public class MainPanel extends JPanel {
         graphPanel.updatePolynomial(polynomial, lowerBound, upperBound);
     }
 
-    public void updateMethods(Bisection bisection, RegulaFalsi falsi, Secant secant) {
+    public void updateMethods(Bisection bisection, RegulaFalsi falsi, NewtonRaphson newton, Secant secant) {
         bisectionTab.updateMethod(bisection);
         falsiTab.updateMethod(falsi);
+        newtonTab.updateMethod(newton);
         secantTab.updateMethod(secant);
         updatePolynomial(falsi.getPolynomial());
     }

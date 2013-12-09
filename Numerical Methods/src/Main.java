@@ -1,6 +1,7 @@
 import methods.AccuracyChecker;
 import methods.Bisection;
 import methods.IterationChecker;
+import methods.NewtonRaphson;
 import methods.Polynomial;
 import methods.PolynomialValidator;
 import methods.RegulaFalsi;
@@ -15,6 +16,7 @@ public class Main {
     private Polynomial currentPolynomial;
     private Bisection bisection;
     private RegulaFalsi falsi;
+    private NewtonRaphson newton;
     private Secant secant;
     private double upperLimit;
     private double lowerLimit;
@@ -39,8 +41,9 @@ public class Main {
     private void refreshEquations() {
         bisection = new Bisection(currentPolynomial, lowerLimit, upperLimit);
         falsi = new RegulaFalsi(currentPolynomial, lowerLimit, upperLimit);
+        newton = new NewtonRaphson(currentPolynomial, lowerLimit);
         secant = new Secant(currentPolynomial, lowerLimit, upperLimit);
-        panel.updateMethods(bisection, falsi, secant);
+        panel.updateMethods(bisection, falsi, newton, secant);
     }
     
     private class InputListenerI implements InputListener {

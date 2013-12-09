@@ -87,7 +87,6 @@ public class Secant extends Method {
             }
         }
         
-        
         return new Line(x0, y0, x1, y1);
     }
 }

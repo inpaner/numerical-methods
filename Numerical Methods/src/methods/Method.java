@@ -13,6 +13,12 @@ public abstract class Method {
         this.polynomial = polynomial;
     }
     
+    public abstract List<String> getColumnNames();
+    protected abstract void iterate();
+    protected abstract void addIterationRow(List<List<Double>> iterationValues);
+    protected abstract double getY();
+    protected abstract Line getCustomIterationLine(List<Double> iterationRow);
+    
     public List<List<Double>> getIterationValues() {
         if (!isSolved) {
             solveAndStoreValues();
@@ -37,13 +43,6 @@ public abstract class Method {
     public Polynomial getPolynomial() {
         return polynomial;
     }
-    
-    public abstract List<String> getColumnNames();
-    
-    protected abstract void iterate();
-    protected abstract void addIterationRow(List<List<Double>> iterationValues);
-    protected abstract double getY();
-    protected abstract Line getCustomIterationLine(List<Double> iterationRow);
     
     public Line getIterationLine(int iteration) {
         if (!isSolved) {
