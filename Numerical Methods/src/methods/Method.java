@@ -43,6 +43,7 @@ public abstract class Method {
     protected abstract void iterate();
     protected abstract void addIterationRow(List<List<Double>> iterationValues);
     protected abstract double getY();
+    protected abstract Line getCustomIterationLine(List<Double> iterationRow);
     
     public Line getIterationLine(int iteration) {
         if (!isSolved) {
@@ -50,12 +51,7 @@ public abstract class Method {
         }
         
         List<Double> iterationValue = iterationValues.get(iteration);
-        double x0 = iterationValue.get(0);
-        double y0 = iterationValue.get(1);
-        double x1 = iterationValue.get(2);
-        double y1 = iterationValue.get(3);
-        
-        return new Line(x0, y0, x1, y1);
+        return getCustomIterationLine(iterationValue);
     }
     
     protected boolean isFinished() {

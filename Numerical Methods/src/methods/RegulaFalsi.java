@@ -55,4 +55,14 @@ public class RegulaFalsi extends Method {
         row.add(function.evaluate(x1));
         iterationValues.add(row);
     }
+
+    @Override
+    protected Line getCustomIterationLine(List<Double> iterationRow) {
+        double x0 = iterationRow.get(0);
+        double y0 = iterationRow.get(1);
+        double x1 = iterationRow.get(2);
+        double y1 = iterationRow.get(3);
+
+        return new Line(x0, y0, x1, y1);
+    }
 }
