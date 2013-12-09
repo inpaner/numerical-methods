@@ -52,7 +52,8 @@ public class MainPanel extends JPanel {
     }
     
     public void updateMethods(RegulaFalsi falsi, Secant secant) {
-        
+        falsiTab.updateMethod(falsi);
+        secantTab.updateMethod(secant);
     }
     
     private class TabPaneListener implements ChangeListener {

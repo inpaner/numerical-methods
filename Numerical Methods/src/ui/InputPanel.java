@@ -156,7 +156,6 @@ public class InputPanel extends JPanel {
         }
         
         private void fireEvent() {
-            System.out.println(equationField.getText());
             for (InputListener listener : listeners) {
                 listener.equationChanged( equationField.getText() );
             }

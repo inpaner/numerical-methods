@@ -5,7 +5,7 @@ import java.util.List;
 
 public class Polynomial {
     private List<Double> coefficients;
-    
+        
     public static void main(String[] args) {
         List<Double> c = new ArrayList<Double>();
         c.add(1.0);
@@ -25,6 +25,20 @@ public class Polynomial {
     
     public Polynomial(List<Double> coefficients) {
         this.coefficients = coefficients;
+    }
+    
+    /** 
+     * 
+     * @param equation  A validated equation string.
+     */
+    public Polynomial(String equation) {
+        coefficients = new ArrayList<>();
+        
+        String[] splitEquation = equation.split(" ");       
+        for (String singleValue : splitEquation) {
+            double convertedValue = Double.valueOf(singleValue);
+            coefficients.add(convertedValue);
+        }
     }
     
     public int getDegree() {
