@@ -27,7 +27,7 @@ import ui.events.InputListener;
 public class InputPanel extends JPanel {
     private List<InputListener> listeners = new ArrayList<>();
     
-    private JTextField equationField;
+    private HintedJTextField equationField;
     private JLabel equationLabel;
     private JSpinner lowerSpinner;
     private JSpinner upperSpinner;
@@ -39,7 +39,9 @@ public class InputPanel extends JPanel {
     
     public InputPanel() {
         // Equation
-        equationField = new JTextField(20);
+        equationField = new HintedJTextField(20);
+        String hint = "format: -4 15 -1 5";
+        equationField.setHint(hint);
         equationLabel = new JLabel(" ");
         
         
