@@ -2,7 +2,7 @@ package methods;
 
 public class IterationChecker {
     private static int totalIterations = 50;
-    private static final int divergenceLimit = 50;
+    private static final int divergenceLimit = 500;
     private static boolean isActive = true;
     
     public static boolean isFinishedIterating(int iterations) {
