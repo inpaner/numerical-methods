@@ -6,7 +6,6 @@ import methods.Polynomial;
 import methods.PolynomialValidator;
 import methods.RegulaFalsi;
 import methods.Secant;
-import ui.InputPanel;
 import ui.MainFrame;
 import ui.MainPanel;
 import ui.events.InputListener;

@@ -13,8 +13,6 @@ import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 
 import methods.Method;
-import methods.Polynomial;
-import methods.RegulaFalsi;
 import net.miginfocom.swing.MigLayout;
 import ui.events.MethodTabListener;
 
@@ -82,7 +80,6 @@ public class MethodTab extends JPanel {
             for (MethodTabListener listener : listeners) {
                 listener.selectedIteration(index);
             }
-        
         }
     }
 }
