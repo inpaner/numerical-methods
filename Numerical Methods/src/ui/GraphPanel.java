@@ -27,6 +27,7 @@ public class GraphPanel extends JPanel {
     private double inputUpperBound;
     private JCheckBox zoomBox;
 
+    
     GraphPanel() {
         dataset = new XYSeriesCollection();
         
@@ -48,8 +49,8 @@ public class GraphPanel extends JPanel {
         add(zoomBox);
     }
     
+    
     void updatePolynomial(Polynomial polynomial, double lowerBound, double upperBound) {
-        assert lowerBound <= upperBound : "lower bound > upper bound";
         this.polynomial = polynomial;
         inputLowerBound = lowerBound;
         inputUpperBound = upperBound;
@@ -60,6 +61,7 @@ public class GraphPanel extends JPanel {
         
         dataset.addSeries(polynomialSeries);
     }
+    
     
     private XYSeries createPolynomialSeries(Polynomial polynomial, double lowerBound, double upperBound) {
         XYSeries result = new XYSeries(polynomial.toString());
@@ -75,10 +77,12 @@ public class GraphPanel extends JPanel {
         return result;
     }
     
+    
     void updateLine(Line line) {
         this.line = line;
         plotPolynomialAndLine();
     }
+    
     
     private void plotPolynomialAndLine() {
         XYSeries lineSeries = new XYSeries("");
@@ -104,6 +108,7 @@ public class GraphPanel extends JPanel {
         dataset.addSeries(polynomialSeries);
         dataset.addSeries(lineSeries);
     }
+    
     
     private class ZoomBoxListener implements ActionListener {
         @Override

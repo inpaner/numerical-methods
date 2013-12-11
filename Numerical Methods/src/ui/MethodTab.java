@@ -24,6 +24,7 @@ public class MethodTab extends JPanel {
     private JLabel fOfXValue;
     private List<MethodTabListener> listeners = new ArrayList<>();
     
+    
     MethodTab() {
         JLabel iterationsLabel = new JLabel("Iterations: ");
         iterationsValue = new JLabel("");
@@ -37,6 +38,7 @@ public class MethodTab extends JPanel {
         iterationsTable.getSelectionModel().addListSelectionListener(new ListListener());
         
         JScrollPane tablePane = new JScrollPane(iterationsTable);
+        
         setLayout(new MigLayout("wrap 2"));
         add(iterationsLabel);
         add(iterationsValue);
@@ -45,9 +47,11 @@ public class MethodTab extends JPanel {
         add(tablePane, "span, split");
     }
     
+    
     void addListener(MethodTabListener listener) {
         listeners.add(listener);
     }
+    
     
     void updateMethod(Method method) {
         this.method = method;
@@ -61,15 +65,19 @@ public class MethodTab extends JPanel {
         iterationsTable.setModel( methodModel );
     }
     
+    
     Method getMethod() {
         return method;
     }
+    
     
     int getSelectedIteration() {
         return iterationsTable.getSelectedRow();
     }
     
+    
     private class ListListener implements ListSelectionListener {
+        
         @Override
         public void valueChanged(ListSelectionEvent ev) {
             int index = iterationsTable.getSelectedRow();

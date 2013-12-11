@@ -16,5 +16,4 @@ public interface InputListener {
     void accuracyLimitChanged(double accuracy);
     void accuracySelected();
     void accuracyDeselected();
-
 }

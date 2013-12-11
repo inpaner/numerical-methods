@@ -9,6 +9,7 @@ public class NewtonRaphson extends Method {
     private double x;
     private double x2 = 0;
     
+    
     public NewtonRaphson(Polynomial polynomial, double startingPoint) {
         super(polynomial);
         function = polynomial;
@@ -16,6 +17,7 @@ public class NewtonRaphson extends Method {
         this.x = startingPoint;
     }
 
+    
     @Override
     public List<String> getColumnNames() {
         List<String> result = new ArrayList<>();
@@ -25,13 +27,20 @@ public class NewtonRaphson extends Method {
         return result;
     }
 
+    
     @Override
     protected void iterate() {
         x2 = x - function.evaluate(x) / derivative.evaluate(x);
         x = x2;
-        
     }
 
+    
+    @Override
+    protected double getY() {
+        return function.evaluate(x2);
+    }
+
+    
     @Override
     protected void addIterationRow(List<List<Double>> iterationValues) {
         List<Double> row = new ArrayList<>();
@@ -41,11 +50,7 @@ public class NewtonRaphson extends Method {
         iterationValues.add(row);
     }
 
-    @Override
-    protected double getY() {
-        return function.evaluate(x2);
-    }
-
+    
     @Override
     protected Line getCustomIterationLine(List<Double> iterationRow) {
         double initialX = iterationRow.get(0);
@@ -57,5 +62,4 @@ public class NewtonRaphson extends Method {
         
         return new Line(initialX, initialY, zeroedX, zeroedY);
     }
-
 }

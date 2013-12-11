@@ -14,9 +14,11 @@ import javax.swing.text.JTextComponent;
  */
 @SuppressWarnings("serial")
 public class HintedJTextField extends JTextField {
+    
     HintedJTextField(int columns) {
         super(columns);
     }
+    
     
     void setHint(String hint) {
         setUI(new JTextFieldHintUI(hint, Color.gray));
@@ -27,17 +29,20 @@ class JTextFieldHintUI extends BasicTextFieldUI implements FocusListener {
     private String hint;
     private Color  hintColor;
  
+    
     public JTextFieldHintUI(String hint, Color hintColor) {
         this.hint = hint;
         this.hintColor = hintColor;
     }
  
+    
     private void repaint() {
         if (getComponent() != null) {
             getComponent().repaint();
         }
     }
  
+    
     @Override
     protected void paintSafely(Graphics g) {
         // Render the default text field UI
@@ -52,22 +57,26 @@ class JTextFieldHintUI extends BasicTextFieldUI implements FocusListener {
         }
     }
  
+    
     @Override
     public void focusGained(FocusEvent e) {
         repaint();
     }
  
+    
     @Override
     public void focusLost(FocusEvent e) {
         repaint();
     }
  
+    
     @Override
     public void installListeners() {
         super.installListeners();
         getComponent().addFocusListener(this);
     }
  
+    
     @Override
     public void uninstallListeners() {
         super.uninstallListeners();

@@ -10,6 +10,7 @@ import methods.Method;
 public class MethodTableModel extends AbstractTableModel {
     private Method method;
     
+    
     MethodTableModel(Method method) {
         this.method = method;
     }
@@ -21,6 +22,7 @@ public class MethodTableModel extends AbstractTableModel {
         return method.getColumnNames().size() + 1;
     }
 
+    
     @Override
     public int getRowCount() {
         return method.getIterationValues().size();
@@ -64,9 +66,9 @@ public class MethodTableModel extends AbstractTableModel {
         return value;
     }
     
+    
     @Override
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         return false;
     }
-    
 }

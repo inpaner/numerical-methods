@@ -9,15 +9,18 @@ public abstract class Method {
     private int iterations;
     private Polynomial polynomial;
     
+    
     protected Method(Polynomial polynomial) {
         this.polynomial = polynomial;
     }
+    
     
     public abstract List<String> getColumnNames();
     protected abstract void iterate();
     protected abstract void addIterationRow(List<List<Double>> iterationValues);
     protected abstract double getY();
     protected abstract Line getCustomIterationLine(List<Double> iterationRow);
+    
     
     public List<List<Double>> getIterationValues() {
         if (!isSolved) {
@@ -26,12 +29,14 @@ public abstract class Method {
         return iterationValues;
     }
     
+    
     public int getTotalIterations() {
         if (!isSolved) {
             solveAndStoreValues();
         }
         return iterations;
     }
+    
     
     public double getFinalY() {
         if (!isSolved) {
@@ -40,9 +45,11 @@ public abstract class Method {
         return getY();
     }
     
+    
     public Polynomial getPolynomial() {
         return polynomial;
     }
+    
     
     public Line getIterationLine(int iteration) {
         if (!isSolved) {
@@ -52,6 +59,7 @@ public abstract class Method {
         List<Double> iterationValue = iterationValues.get(iteration);
         return getCustomIterationLine(iterationValue);
     }
+    
     
     protected boolean isFinished() {
         boolean result = false;
@@ -64,6 +72,7 @@ public abstract class Method {
         return result;
     }
 
+    
     private void solveAndStoreValues() {
         iterationValues = new ArrayList<>();
         iterations = 0; 
@@ -75,5 +84,4 @@ public abstract class Method {
         } while (!isFinished());
         isSolved = true;
     }
-
 }

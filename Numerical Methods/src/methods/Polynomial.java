@@ -6,27 +6,7 @@ import java.util.List;
 public class Polynomial {
     private List<Double> coefficients;
         
-    public static void main(String[] args) {
-        List<Double> c = new ArrayList<Double>();
-        c.add(1.0);
-        c.add(1.0);
-        
-        Polynomial p = new Polynomial(c);
-        System.out.println(p);
-        System.out.println(p.getDerivative());
-    }
-    
-    public Polynomial(double... coefficients) {
-        this.coefficients = new ArrayList<>();
-        for (double coefficient : coefficients) {
-            this.coefficients.add(coefficient);
-        }
-    }
-    
-    public Polynomial(List<Double> coefficients) {
-        this.coefficients = coefficients;
-    }
-    
+
     /** 
      * 
      * @param equation  A validated equation string.
@@ -41,13 +21,21 @@ public class Polynomial {
         }
     }
     
+
+    private Polynomial(List<Double> coefficients) {
+        this.coefficients = coefficients;
+    }
+    
+    
     public int getDegree() {
         return coefficients.size() - 1;
     }
     
+    
     public List<Double> getCoefficients() {
         return coefficients;
     }
+    
     
     public double evaluate(double x) {
         double result = 0;
@@ -59,6 +47,7 @@ public class Polynomial {
             
         return result;
     }
+    
     
     public String toString() {
         int degree = getDegree();
@@ -100,6 +89,7 @@ public class Polynomial {
         return result;
     }
     
+    
     public Polynomial getDerivative() {
         List<Double> derivativeCoefficients = new ArrayList<>();
         int degree = getDegree();
@@ -108,12 +98,10 @@ public class Polynomial {
         }
         else {
             for (double coefficient : coefficients) {
-        
                     if (degree != 0) {
                         derivativeCoefficients.add(coefficient * degree);
                     }
-                    degree--;
-                
+                    degree--;   
             }
         }
         return new Polynomial(derivativeCoefficients);

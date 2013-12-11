@@ -8,7 +8,7 @@ public class Bisection extends Method {
     private double x0;
     private double x1;
     private double x2 = 0;
-    
+
     
     public Bisection(Polynomial polynomial, double x0, double x1) {
         super(polynomial);
@@ -17,7 +17,7 @@ public class Bisection extends Method {
         this.x1 = x1;
     }
     
-    
+
     @Override
     public List<String> getColumnNames() {
         List<String> result = new ArrayList<>();
@@ -45,6 +45,12 @@ public class Bisection extends Method {
 
 
     @Override
+    protected double getY() {
+        return function.evaluate(x2);
+    }
+
+
+    @Override
     protected void addIterationRow(List<List<Double>> iterationValues) {
         List<Double> row = new ArrayList<>();
         row.add(x0);
@@ -54,11 +60,6 @@ public class Bisection extends Method {
         iterationValues.add(row);
     }
 
-    @Override
-    protected double getY() {
-        return function.evaluate(x2);
-    }
-    
     @Override
     protected Line getCustomIterationLine(List<Double> iterationRow) {
         double x0 = iterationRow.get(0);

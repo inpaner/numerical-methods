@@ -36,6 +36,7 @@ public class InputPanel extends JPanel {
     private JCheckBox iterationsBox;
     private JCheckBox accuracyBox;
     
+    
     public InputPanel() {
         // Equation
         equationField = new HintedJTextField(20);
@@ -125,6 +126,7 @@ public class InputPanel extends JPanel {
         setDefaultValues();
     }
     
+    
     private void setDefaultValues() {
         iterationsBox.setSelected(true);
         accuracyBox.setSelected(true);
@@ -133,6 +135,7 @@ public class InputPanel extends JPanel {
         iterationSpinner.setValue(50);
         accuracySpinner.setValue(0.001);
     }
+    
     
     void updateEquation(Polynomial polynomial) {
         StringBuilder equation = new StringBuilder("");
@@ -177,13 +180,16 @@ public class InputPanel extends JPanel {
         equationLabel.setText(result);
     }
     
+    
     double getLowerBound() {
         return (double) lowerSpinner.getValue();
     }
     
+    
     double getUpperBound() {
         return (double) upperSpinner.getValue();
     }
+    
     
     void setInvalid() {
         equationLabel.setText("Invalid");
@@ -204,13 +210,16 @@ public class InputPanel extends JPanel {
         @Override
         public void changedUpdate(DocumentEvent e) {}
 
+        
         public void insertUpdate(DocumentEvent e) {
             fireEvent();
         }
 
+        
         public void removeUpdate(DocumentEvent e) {
             fireEvent();
         }
+        
         
         private void fireEvent() {
             for (InputListener listener : listeners) {
@@ -219,7 +228,9 @@ public class InputPanel extends JPanel {
         }
     }
     
+    
     private class LowerSpinnerListener implements ChangeListener {
+        
         @Override
         public void stateChanged(ChangeEvent event) {         
             double lowerLimit = (Double) lowerSpinner.getValue();
@@ -235,7 +246,9 @@ public class InputPanel extends JPanel {
         }
     }
     
+    
     private class UpperSpinnerListener implements ChangeListener {
+        
         @Override
         public void stateChanged(ChangeEvent event) {         
             double lowerLimit = (Double) lowerSpinner.getValue();
@@ -251,7 +264,9 @@ public class InputPanel extends JPanel {
         }
     }
     
+    
     private class LowerRadioListener implements ActionListener {
+     
         @Override
         public void actionPerformed(ActionEvent event) {        
             for (InputListener listener : listeners) {
@@ -260,7 +275,9 @@ public class InputPanel extends JPanel {
         }
     }
     
+    
     private class UpperRadioListener implements ActionListener {
+        
         @Override
         public void actionPerformed(ActionEvent event) {        
             for (InputListener listener : listeners) {
@@ -271,6 +288,7 @@ public class InputPanel extends JPanel {
     
     
     private class IterationsBoxListener implements ActionListener {  
+        
         @Override
         public void actionPerformed(ActionEvent event) {
             if (iterationsBox.isSelected()) {
@@ -288,7 +306,9 @@ public class InputPanel extends JPanel {
         }
     }
     
+    
     private class IterationsValueListener implements ChangeListener {
+        
         @Override
         public void stateChanged(ChangeEvent event) {         
             int iterations = (int) iterationSpinner.getValue();
@@ -299,7 +319,9 @@ public class InputPanel extends JPanel {
         }
     }
         
+    
     private class AccuracyBoxListener implements ActionListener {  
+        
         @Override
         public void actionPerformed(ActionEvent event) {
             if (accuracyBox.isSelected()) {
@@ -317,7 +339,9 @@ public class InputPanel extends JPanel {
         }
     }
     
+    
     private class AccuracyValueListener implements ChangeListener {
+        
         @Override
         public void stateChanged(ChangeEvent event) {         
             double accuracy = (double) accuracySpinner.getValue();

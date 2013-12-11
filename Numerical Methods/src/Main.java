@@ -19,8 +19,8 @@ public class Main {
     private Secant secant;
     
     private boolean lowerLimitIsStart = true;
-    private double upperLimit;
-    private double lowerLimit;
+    private double upperLimit = 10;
+    private double lowerLimit = -10;
     private MainPanel panel;
     
     public static void main(String[] args) {
@@ -28,9 +28,6 @@ public class Main {
     }
     
     void begin() {
-        upperLimit = 10;
-        lowerLimit = -10;
-        
         MainFrame frame = new MainFrame();
         panel = new MainPanel();
         panel.addInputListener(new InputListenerI());
@@ -92,7 +89,6 @@ public class Main {
             refreshEquations();
         }
         
-        
         @Override
         public void iterationLimitChanged(int iterations) {
             IterationChecker.setTotalIterations(iterations);
@@ -128,6 +124,5 @@ public class Main {
             AccuracyChecker.disable();
             refreshEquations();
         }
-
     }
 }

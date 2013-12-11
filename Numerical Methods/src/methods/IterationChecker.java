@@ -5,6 +5,7 @@ public class IterationChecker {
     private static final int divergenceLimit = 500;
     private static boolean isActive = true;
     
+    
     public static boolean isFinishedIterating(int iterations) {
         boolean isFinished = false; 
         if (IterationChecker.isActive) {
@@ -16,9 +17,11 @@ public class IterationChecker {
         return isFinished;
     }
     
+    
     public static void setTotalIterations(int iterations) {
         IterationChecker.totalIterations = iterations;
     }
+    
     
     public static void enable() {
         isActive = true;

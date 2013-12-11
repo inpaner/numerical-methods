@@ -13,6 +13,7 @@ public class MainFrame extends JFrame {
     private final int WIDTH = 600;
     private JComponent component;
     
+    
     public MainFrame() {
         final String look = "com.sun.java.swing.plaf.windows.WindowsLookAndFeel";
 
@@ -35,17 +36,20 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
+    
     public void closeWindow() {
         WindowEvent event = new WindowEvent(this, WindowEvent.WINDOW_CLOSING);
         Toolkit.getDefaultToolkit().getSystemEventQueue().postEvent(event);
     }
 
+    
     public void setPanel(final JComponent component) {
         this.getContentPane().removeAll();
         this.component = component;
         Thread controller = new setThread();
         controller.start();
     }
+    
     
     private class setThread extends Thread {
         @Override
@@ -54,6 +58,7 @@ public class MainFrame extends JFrame {
         }
     }
 
+    
     private class setInvoke implements Runnable {
         @Override
         public void run() {

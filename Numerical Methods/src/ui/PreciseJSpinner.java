@@ -7,6 +7,7 @@ import javax.swing.SpinnerNumberModel;
 
 @SuppressWarnings("serial")
 public class PreciseJSpinner extends JSpinner {
+    
     public PreciseJSpinner(SpinnerNumberModel spinnerNumberModel) {
         super(spinnerNumberModel);
     }

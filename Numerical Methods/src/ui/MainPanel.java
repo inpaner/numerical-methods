@@ -27,6 +27,7 @@ public class MainPanel extends JPanel {
     private GraphPanel graphPanel;
     private InputPanel inputPanel;
     
+    
     public MainPanel() { 
         /*
          * Init components
@@ -42,7 +43,6 @@ public class MainPanel extends JPanel {
         tabPane.add("Regula Falsi", falsiTab);
         tabPane.add("Newton-Raphson", newtonTab);
         tabPane.add("Secant", secantTab);
-        
         
         graphPanel = new GraphPanel(); 
         
@@ -68,6 +68,7 @@ public class MainPanel extends JPanel {
         add(lowerPane);
     }
     
+    
     private void updatePolynomial(Polynomial polynomial) {
         double lowerBound = inputPanel.getLowerBound();
         double upperBound = inputPanel.getUpperBound();
@@ -75,6 +76,7 @@ public class MainPanel extends JPanel {
         graphPanel.updatePolynomial(polynomial, lowerBound, upperBound);
     }
 
+    
     public void updateMethods(Bisection bisection, RegulaFalsi falsi, NewtonRaphson newton, Secant secant) {
         bisectionTab.updateMethod(bisection);
         falsiTab.updateMethod(falsi);
@@ -83,11 +85,13 @@ public class MainPanel extends JPanel {
         updatePolynomial(falsi.getPolynomial());
     }
     
+    
     private Method getSelectedMethod() {
         int selectedTabIndex = tabPane.getSelectedIndex();
         MethodTab tab = (MethodTab) tabPane.getComponentAt(selectedTabIndex);
         return tab.getMethod();
     }
+    
     
     private int getSelectedIteration() {
         int selectedTabIndex = tabPane.getSelectedIndex();
@@ -95,9 +99,11 @@ public class MainPanel extends JPanel {
         return tab.getSelectedIteration();
     }
     
+    
     public void setInvalid() {
         inputPanel.setInvalid();
     }
+    
     
     /*
      * Internal listeners
@@ -107,7 +113,9 @@ public class MainPanel extends JPanel {
         inputPanel.addListener(listener);
     }
 
+    
     private class TabPaneListener implements ChangeListener {
+        
         @Override
         public void stateChanged(ChangeEvent e) {
             Method selectedMethod = getSelectedMethod();
@@ -117,6 +125,7 @@ public class MainPanel extends JPanel {
             graphPanel.updateLine(selectedMethod.getIterationLine(iteration));
         }
     }
+    
     
     private class MethodTabListenerI implements MethodTabListener {
 
